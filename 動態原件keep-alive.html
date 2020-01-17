@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button type="button" @click="pagename = 'mainpage'">switch to Main page</button>
+    <button type="button" @click="pagename = 'aboutpage'">switch to About page</button>
+    <button type="button" @click="pagename = 'contactpage'">switch to Contact page</button>
+    <keep-alive>
+      <component :is="pagename"></component>
+    </keep-alive>
+  </div>
+
+  <script>
+    Vue.component('mainpage', {
+      template: `<div>This page is mainpage. Enter this page : {{ count }} </div>`,
+      data() {
+        return {
+          count: 0
+        }
+      },
+      activated() {
+        this.count++
+      },
+      destroyed() {
+        console.log('destroyed')
+      },
+    })
+    Vue.component('aboutpage', {
+      template: `<div>This page is aboutpage. Enter this page : {{ count }} </div>`,
+      data() {
+        return {
+          count: 0
+        }
+      },
+      activated() {
+        this.count++
+      },
+      destroyed() {
+        console.log('destroyed')
+      },
+    })
+    Vue.component('contactpage', {
+      template: `<div>This page is contactpage. Enter this page : {{ count }} </div>`,
+      data() {
+        return {
+          count: 0
+        }
+      },
+      activated() {
+        this.count++
+      },
+      destroyed() {
+        console.log('destroyed')
+      },
+    })
+
+
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        pagename: 'mainpage'
+      }
+    })
+  </script>
+</body>
+
+</html>

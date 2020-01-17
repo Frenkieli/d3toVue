@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+  <script>
+    // d3.select("p").style("color", "red");
+    // let d3datum = d3.selectAll('p')
+    //             .datum('綁定資料')
+    //             .text(function(d){
+    //                 return d
+    //             })
+    let exitData = ['a', 'b', 'c', 'd'];
+    let exit = d3.selectAll('p')
+      .data(exitData)
+      .enter()
+      .append('p')
+      .text(function (d) {
+        return d;
+      })
+
+    let sampleData = [10, 20, 30]
+    let svg = d3.select('body')
+      .append('svg')
+      .attr('width', 500)
+      .attr('height', 500)
+
+    svg.selectAll('circle')          // 這裡選了 cirlce 標籤 （對於當前網頁來說是空元素）
+      .data(sampleData)             // 綁定 sampleData 資料給予接下來的元素
+      .enter()                      // 透過 enter() 找到仍需要三個元素來存放資料
+      .append('circle')             // 將 enter() 返回的元素數量新增為 circle 標籤
+      .attr('cx', function (d, i) {     // 透過 attr() 來將前面教學提到的屬性給予 circle 標籤
+        return (i + 1) * 100              // 其中的 d 為 data， i 為 資料的陣列索引值
+      })
+      .attr('cy', 100)
+      .attr('r', function (d) {        // 這裡的圓形半徑採用綁定的資料
+        return d
+      })
+      .style('fill', 'red')          // 為圓形增添一下樣式
+
+    let sampleData2 = [10, 20] // 這裡假設有另一筆新的資料產生
+    setTimeout(() => {
+      svg.selectAll('circle')   // 選取已經含有 sampleData 資料的圓形標籤
+        .data(sampleData2)    // 將新的資料作為綁定
+        .exit()               // 篩選出符合 exit 類別的資料元素
+        .remove()             // 刪除符合上方條件的元素
+        console.log(svg)
+    }, 1000);
+    console.log(svg)
+  </script>
+</body>
+
+</html>

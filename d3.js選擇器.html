@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+  <p> Hello, D3.js. </p>
+  <p></p>
+  <p></p>
+  <script>
+    d3.select("p").style("color", "red");
+
+    // let d3datum = d3.selectAll('p')
+    //             .datum('綁定資料')
+    //             .text(function(d){
+    //                 return d
+    //             })
+    let exitData = ['a', 'b','c','d'];
+    let exit = d3.selectAll('p')
+      .data(exitData)
+      .text(function (d) {
+        return d;
+      })
+    console.log(exit);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <p>父元件：<br>
+      {{ message }}<br>
+      <input type="text" v-model="message">
+    </p>
+    <p>子元件：
+      <child-component :parent-message="message"></child-component>
+    </p>
+  </div>
+
+  <script>
+
+    Vue.component('child-component', {
+      template: `
+        <div> {{ parentMessage }} <br>
+        <input type="text" v-model="parentMessage">
+        <button type="button" @click="updateText">Update</button></div>`,
+      props: {
+        parentMessage: String
+      },
+      data: function () {
+        return {
+          message: this.parentMessage
+        }
+      },
+      methods: {
+        updateText: function () {
+          this.$parent.$emit('update', this.message)
+        }
+      }
+    })
+
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        message: '父元件資料'
+      },
+      methods: {
+        selfUpdate(value) {
+          this.message = value
+        }
+      },
+      mounted() {
+        this.$on('update', this.selfUpdate)
+      },
+    })
+  </script>
+</body>
+
+</html>

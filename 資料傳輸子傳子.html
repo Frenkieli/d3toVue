@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <element-city1></element-city1>
+    <element-city2></element-city2>
+  </div>
+
+  <script>
+
+    Vue.component('element-city1', {
+      template:
+      ` 
+        <div>
+          <input type="text" v-model="message"><br>
+          <button type="button" @click="submit">Click</button>
+        </div>
+      `,
+      methods: {
+        submit() {
+          bus.$emit('receive', this.message)
+        }
+      },
+      data() {
+        return {
+          message: "this is city1's message"
+        }
+      }
+    })
+
+    Vue.component('element-city2', {
+      template: `<div>{{ message }}</div>`,
+      created() {
+        let self = this
+        bus.$on('receive', function (newMessage) {
+          self.message = newMessage
+        })
+      },
+      data() {
+        return {
+          message: "this is city2's message"
+        }
+      }
+    })
+    let bus = new Vue();
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        text: 'Hello Vue!',
+      },
+      methods: {
+        handleOnClick: function (name) {
+          return this.text = `Hello ${name}!`
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <style>
+    .red{
+      color: red;
+    }
+    .text{
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div v-if="text1" :class="{'red':colorclass , 'text':text1}">最後這段文會顯示</div>
+    <div v-if="text2">最後這段文不會顯示</div>
+    <ul>
+      <li v-for="(v,i) in class001" :key='v.id'>
+        第{{i}}筆資料，姓名：{{v.name}}，年齡：{{v.age}}
+      </li>
+    </ul>
+    <input type="text" v-model='inputtext'>
+    <button @click='toAlert'>警告</button>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        colorclass:true,
+        inputtext:'我是誰',
+        text1: true,
+        text2: false,
+        class001: [
+          {
+            id: '001',
+            name: '小明',
+            age: 12
+          },
+          {
+            id: '002',
+            name: '小美',
+            age: 10
+          },
+          {
+            id: '003',
+            name: '小華',
+            age: 11
+          },
+        ]
+      },
+      methods:{
+        toAlert:function(){
+          this.colorclass = !this.colorclass;
+          console.log(this.inputtext);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

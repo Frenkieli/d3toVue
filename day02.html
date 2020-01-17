@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{ a }}
+
+    目前擁有台幣：{{ money }}元。
+    轉換為日幣後：{{ JPY }}日圓。
+    <hr>
+    <button @click='money += 100'>加錢</button>
+    <hr>
+
+    <button @click="handleOnClick('Shawn')" type="button">{{text}}</button>
+    <hr>
+    <p>
+      今晚晚餐吃這個：
+      <input v-model="question">
+    </p>
+    <p>{{ answer }}</p>
+  </div>
+
+  <script>
+
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        a: 1,
+        b: {
+          b1: 'something',
+          b2: 'another'
+        },
+        money: 1000,
+        text: '是誰',
+        question: '',
+        answer: '讓我來幫你決定要吃什麼吧！'
+      },
+      computed: {
+        JPY: function () {
+          return this.money / 0.3
+        }
+      },
+      methods: {
+        handleOnClick: function (name) {
+          setInterval(() => {
+            this.money += 100;
+          }, 1000);
+          return this.text = `Hello ${name}!`
+        },
+        getAnswer: function () {
+          var self = this
+          fetch('https://yesno.wtf/api')
+            .then(res => res.json())
+            .then(res => {
+              self.answer = res.answer
+            })
+        }
+      },
+      watch: {
+        question: function () {
+          this.getAnswer()
+        }
+      }
+    })
+
+  </script>
+</body>
+
+</html>

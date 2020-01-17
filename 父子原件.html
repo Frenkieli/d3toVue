@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <wrapper-header></wrapper-header>
+    <wrapper-body></wrapper-body>
+    <wrapper-footer></wrapper-footer>
+  </div>
+  <div id="app2">
+    <wrapper-header></wrapper-header>
+    <wrapper-body></wrapper-body>
+    <wrapper-footer></wrapper-footer>
+  </div>
+
+  <script>
+    let wrapperHeader = Vue.extend({
+      template: '<div>Header</div>'
+    })
+
+    let wrapperBody = Vue.extend({
+      template:
+        '<div>' +
+        '<wrapper-innerBody></wrapper-innerBody>' +
+        '<wrapper-innerBody></wrapper-innerBody>' +
+        '<wrapper-innerBody></wrapper-innerBody>' +
+        '</div>',
+      components: {
+        wrapperInnerBody: Vue.extend({
+          template: ' <div>Body</div> '
+        })
+      }
+    })
+
+    let wrapperFooter = Vue.extend({
+      template: '<div>Footer</div>'
+    })
+
+    Vue.component('wrapper-header', wrapperHeader)
+    Vue.component('wrapper-body', wrapperBody)
+    Vue.component('wrapper-footer', wrapperFooter)
+
+
+    let vm = new Vue({
+      el: '#app',
+      components: {
+        // WrapperHeader: Vue.extend({
+        //   template: '<div>Header</div>'
+        // }),
+        // WrapperBody: Vue.extend({
+        //   template:
+        //     '<div>' +
+        //     '<wrapper-innerBody></wrapper-innerBody>' +
+        //     '<wrapper-innerBody></wrapper-innerBody>' +
+        //     '<wrapper-innerBody></wrapper-innerBody>' +
+        //     '</div>',
+        //   components: {
+        //     wrapperInnerBody: Vue.extend({
+        //       template: ' <div>Body</div> '
+        //     })
+        //   }
+        // }),
+        // WrapperFooter: Vue.extend({
+        //   template: '<div>Footer</div>'
+        // })
+        wrapperHeader,
+        wrapperBody,
+        wrapperFooter
+      }
+    })
+
+    let vm2 = new Vue({
+      el:'#app2'
+    })
+  </script>
+</body>
+
+</html>
